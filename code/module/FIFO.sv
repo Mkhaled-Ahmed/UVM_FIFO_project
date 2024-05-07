@@ -32,14 +32,14 @@ module FIFO(FIFO_if intf);
 	assign rd_en=intf.rd_en;
 	//___________________________
 	// ! output
-	assign intf.data_out=data_out;
-	assign intf.wr_ack=wr_ack;
-	assign intf.overflow=overflow;
-	assign intf.full=full;
-	assign intf.empty=empty;
-	assign intf.almostfull=almostfull;
-	assign intf.almostempty=almostempty;
-	assign intf.underflow=underflow;
+	assign data_out=intf.data_out;
+	assign wr_ack=intf.wr_ack;
+	assign overflow=intf.overflow;
+	assign full=intf.full;
+	assign empty=intf.empty;
+	assign almostfull=intf.almostfull;
+	assign almostempty=intf.almostempty;
+	assign underflow=intf.underflow;
 	
 	localparam max_fifo_addr = $clog2(FIFO_DEPTH);
 	
