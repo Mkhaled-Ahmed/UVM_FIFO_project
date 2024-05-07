@@ -21,10 +21,11 @@ package FIFO_monitor_pkg;
             super.run_phase(phase);
             forever begin
                 rsp_seq_item = FIFO_seq_item::type_id::create("rsp_seq_item");
-                @(posedge fifo_vif.clk);
-                // rsp_seq_item.data_in = fifo_vif.data_in;
-                // rsp_seq_item.wr_en = fifo_vif.wr_en;
-                // rsp_seq_item.rd_en = fifo_vif.rd_en;
+                @(negedge fifo_vif.clk);
+                rsp_seq_item.rst_n = fifo_vif.rst_n;
+                rsp_seq_item.data_in = fifo_vif.data_in;
+                rsp_seq_item.wr_en = fifo_vif.wr_en;
+                rsp_seq_item.rd_en = fifo_vif.rd_en;
                 rsp_seq_item.wr_ack = fifo_vif.wr_ack;
                 rsp_seq_item.overflow = fifo_vif.overflow;
                 rsp_seq_item.full = fifo_vif.full;

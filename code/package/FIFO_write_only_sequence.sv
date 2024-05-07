@@ -11,7 +11,7 @@ package FIFO_write_only_sequence_pkg;
         endfunction
     
         task body;
-            repeat(1000) begin
+            repeat(10) begin
                 seq_item = FIFO_seq_item::type_id::create("seq_item");
                 start_item(seq_item);
                 seq_item.rst_n=1;
@@ -19,8 +19,6 @@ package FIFO_write_only_sequence_pkg;
                 seq_item.wr_en=1;
                 seq_item.rd_en=0;
                 finish_item(seq_item);
-               // @(posedge seq_item.clk);
-                //if (seq_item.full) `uvm_info("WRITE_ONLY", "FIFO is full", UVM_HIGH);
             end
         endtask
     endclass

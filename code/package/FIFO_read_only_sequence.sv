@@ -13,14 +13,13 @@ package FIFO_read_only_sequence_pkg;
     
         task body;
 
-            repeat(100) begin
+            repeat(10) begin
                 seq_item = FIFO_seq_item::type_id::create("seq_item");
                 start_item(seq_item);
                 seq_item.rst_n=1;
                 seq_item.rd_en=1;
                 seq_item.wr_en=0;
                 finish_item(seq_item);
-                //@(posedge seq_item.clk);
             end
         endtask
     endclass

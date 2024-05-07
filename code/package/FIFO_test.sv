@@ -6,6 +6,7 @@ package FIFO_test_pkg;
     import FIFO_config_pkg::*;
     import FIFO_read_only_sequence_pkg::*;
     import FIFO_write_only_sequence_pkg::*;
+    import FIFO_main_constrained_sequence_pkg::*;
     import FIFO_write_read_sequence_pkg::*;
     import FIFO_reset_sequence_pkg::*;
 
@@ -18,6 +19,7 @@ package FIFO_test_pkg;
         FIFO_config fifo_cgf;
         FIFO_reset_sequence reset_seq;
         FIFO_write_only_sequence write_seq;
+        FIFO_main_constrained_sequence main_seq;
         FIFO_read_only_sequence read_seq;
         FIFO_write_read_sequence write_read_seq;
 
@@ -34,6 +36,7 @@ package FIFO_test_pkg;
             write_seq=FIFO_write_only_sequence::type_id::create("write_seq",this);
             read_seq=FIFO_read_only_sequence::type_id::create("read_seq",this);
             write_read_seq=FIFO_write_read_sequence::type_id::create("write_read_seq",this);
+            main_seq=FIFO_main_constrained_sequence::type_id::create("main_seq",this);
         
             if(!uvm_config_db#(virtual FIFO_if)::get(this, "", "INTF", fifo_cgf.fifo_vif))
             `uvm_fatal("build_phase", "error");
@@ -51,17 +54,33 @@ package FIFO_test_pkg;
             reset_seq.start(env.agt.sqr);
             `uvm_info("run_phase", "reset asserted", UVM_LOW)
 
-            `uvm_info("run_phase", "stimulus Genration Started", UVM_LOW)
+            `uvm_info("run_phase", "write Genration Started", UVM_LOW)
             write_seq.start(env.agt.sqr);
             `uvm_info("run_phase", "stimulus Genration ended", UVM_LOW)
 
-            `uvm_info("run_phase", "stimulus Genration Started", UVM_LOW)
+            `uvm_info("run_phase", "read Genration Started", UVM_LOW)
             read_seq.start(env.agt.sqr);
             `uvm_info("run_phase", "stimulus Genration ended", UVM_LOW)
 
-            `uvm_info("run_phase", "stimulus Genration Started", UVM_LOW)
+            `uvm_info("run_phase", "weite/read Genration Started", UVM_LOW)
             write_read_seq.start(env.agt.sqr);
             `uvm_info("run_phase", "stimulus Genration ended", UVM_LOW)
+
+            `uvm_info("run_phase", "main Genration Started", UVM_LOW)
+            main_seq.start(env.agt.sqr);
+            `uvm_info("run_phase", "main Genration ended", UVM_LOW)
+
+
+
+            `uvm_info("run_phase", "all genrations started", UVM_LOW);
+            repeat(1000)begin
+                write_seq.start(env.agt.sqr);
+                read_seq.start(env.agt.sqr);
+                write_read_seq.start(env.agt.sqr);
+                main_seq.start(env.agt.sqr);    
+                
+            end
+            `uvm_info("run_phase", "all genrations ended", UVM_LOW);
 
             phase.drop_objection(this);
 

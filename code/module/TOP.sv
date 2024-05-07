@@ -6,12 +6,14 @@ module TOP;
     bit clk;
     always #5 clk=~clk;
 
-    FIFO_if fifof(clk);
+    FIFO_if fifo_if(clk);
 
-    FIFO dut(fifof);
+    FIFO dut(fifo_if);
+    bind FIFO  assertions Assertions(fifo_if);
+
 
     initial begin
-        uvm_config_db#(virtual FIFO_if)::set(null, "uvm_test_top", "INTF", fifof);
+        uvm_config_db#(virtual FIFO_if)::set(null, "uvm_test_top", "INTF", fifo_if);
 
         run_test("FIFO_test");
     end
