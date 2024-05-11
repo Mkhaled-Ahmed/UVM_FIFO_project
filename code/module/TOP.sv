@@ -10,8 +10,8 @@ module TOP;
 
     FIFO dut(intf);
 
-    bind FIFO  assertions Assertions(intf);
-
+    bind FIFO Assertions assertions(intf,dut.count,dut.wr_ptr,dut.rd_ptr);
+    
 
     initial begin
         uvm_config_db#(virtual FIFO_if)::set(null, "uvm_test_top", "INTF", intf);

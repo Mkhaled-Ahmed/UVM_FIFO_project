@@ -1,5 +1,7 @@
-module assertions(FIFO_if intf);
-
+module Assertions(FIFO_if intf,
+    input logic [3:0] count,
+    input logic [2:0]wr_ptr,rd_ptr
+    );
 	localparam  FIFO_WIDTH = intf.FIFO_WIDTH;
 	localparam FIFO_DEPTH = intf.FIFO_DEPTH;
 
@@ -16,18 +18,16 @@ module assertions(FIFO_if intf);
 	assign rd_en=intf.rd_en;
 	//___________________________
 	// ! output
-	assign intf.data_out=data_out;
-	assign intf.wr_ack=wr_ack;
-	assign intf.overflow=overflow;
-	assign intf.full=full;
-	assign intf.empty=empty;
-	assign intf.almostfull=almostfull;
-	assign intf.almostempty=almostempty;
-	assign intf.underflow=underflow;
+	assign data_out=intf.data_out;
+	assign wr_ack=intf.wr_ack;
+	assign overflow=intf.overflow;
+	assign full=intf.full;
+	assign empty=intf.empty;
+	assign almostfull=intf.almostfull;
+	assign almostempty=intf.almostempty;
+	assign underflow=intf.underflow;
 
-    localparam max_fifo_addr = $clog2(FIFO_DEPTH);
-	logic [max_fifo_addr-1:0] wr_ptr, rd_ptr;
-	logic [max_fifo_addr:0] count;
+
 
 
 	
